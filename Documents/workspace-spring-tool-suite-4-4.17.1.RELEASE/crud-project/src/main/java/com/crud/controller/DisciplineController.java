@@ -31,8 +31,10 @@ public class DisciplineController {
 	}
 	
 	@GetMapping("/api/disciplines/{id}")
-	public Optional<DisciplineModel> getDisciplinesById(@PathVariable Long id){
-		return repository.findById(id);
+	public ResponseEntity<DisciplineModel> getDisciplinesById(@PathVariable Long id){
+		return repository.findById(id)
+				.map(res -> ResponseEntity.ok().body(res))
+				.orElse(ResponseEntity.notFound().build());
 	}
 	
 	@PostMapping("/api/disciplines")
